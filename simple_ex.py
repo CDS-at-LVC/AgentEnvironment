@@ -49,7 +49,7 @@ class Vacuum(Agent):
 
 # The main program
 if __name__ == '__main__':
-    room = Room(10, 10, 3)
+    room = Room(10, 10, 1)
     vacuum = Vacuum(10, 10)
     room.add_thing(Dirt(), (4, 2))
     room.add_thing(Dirt(), (2, 5))
