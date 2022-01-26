@@ -62,7 +62,7 @@ class Dirt(Thing):
     pass
 
 
-class ThreeSquareEnv(Environment):
+class LinearVacuumEnv(Environment):
 
     def __init__(self, size):
         super().__init__()
@@ -89,7 +89,7 @@ class ThreeSquareEnv(Environment):
         
 
 if __name__=='__main__':
-    env = ThreeSquareEnv(size=7)
+    env = LinearVacuumEnv(size=7)
     env.add_thing(Dirt(), 0)
     env.add_thing(Dirt(), 2)
     env.add_thing(Dirt(), 3)
