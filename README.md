@@ -10,3 +10,7 @@ Remember, the steps to getting this running are
 * update pip with **python -m pip install --upgrade pip**
 * install requirements **pip install -r requirements.txt** (you can trim requirements.txt first if you want. Lots of stuff there you don't need)
 * Now the program should run.
+
+# Examples
+The examples that are currently present are:
+* [vacuum search](vacuum_search.py), which creates a Problem representing a linear vacuum environment so that we can apply various uninformed search algorithms towards finding an optimal action sequence.
