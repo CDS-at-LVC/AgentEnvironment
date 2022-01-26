@@ -1,6 +1,6 @@
 from aima.environments import Environment
 from aima.agents import Agent
-from aima.search import Problem, SimpleProblemSolvingAgentProgram
+from aima.search import Problem, SimpleProblemSolvingAgentProgram, depth_limited_search, iterative_deepening_search
 from aima.search import breadth_first_graph_search, breadth_first_tree_search
 from aima.search import depth_first_graph_search, depth_first_tree_search
 from aima.thing import Thing
@@ -52,9 +52,11 @@ class VacuumProblemSolverProgram(SimpleProblemSolvingAgentProgram):
         return VacuumProblem(initial=state, goal=goal, size=self.size)
 
     def search(self, problem):
-        return depth_first_graph_search(problem=problem).solution()
-
-
+        return breadth_first_tree_search(problem=problem).solution()
+        #return depth_first_tree_search(problem=problem).solution()
+        #return depth_first_graph_search(problem=problem).solution()
+        #return depth_limited_search(problem=problem, limit=14).solution()
+        #return iterative_deepening_search(problem=problem).solution()
 class Dirt(Thing):
     pass
 

@@ -246,7 +246,7 @@ def depth_first_graph_search(problem):
 
 
 def breadth_first_graph_search(problem):
-    """[Figure 3.11]
+    """[Figure 3.9]
     Note that this function can be implemented in a
     single line as below:
     return graph_search(problem, FIFOQueue())
@@ -297,12 +297,12 @@ def best_first_graph_search(problem, f, display=False):
 
 
 def uniform_cost_search(problem, display=False):
-    """[Figure 3.14]"""
+    """[Figure 3.9]"""
     return best_first_graph_search(problem, lambda node: node.path_cost, display)
 
 
 def depth_limited_search(problem, limit=50):
-    """[Figure 3.17]"""
+    """[Figure 3.12]"""
 
     def recursive_dls(node, problem, limit):
         if problem.goal_test(node.state):
@@ -324,10 +324,11 @@ def depth_limited_search(problem, limit=50):
 
 
 def iterative_deepening_search(problem):
-    """[Figure 3.18]"""
+    """[Figure 3.12]"""
     for depth in range(sys.maxsize):
         result = depth_limited_search(problem, depth)
         if result != 'cutoff':
+            print(depth)
             return result
 
 
