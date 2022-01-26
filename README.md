@@ -13,4 +13,4 @@ Remember, the steps to getting this running are
 
 # Examples
 The examples that are currently present are:
-* vacuum_search.py, which creates a Problem representing a linear vacuum environment so that we can apply various uninformed search algorithms towards finding an optimal action sequence.
+* [vacuum search](vacuum_search.py), which creates a Problem representing a linear vacuum environment so that we can apply various uninformed search algorithms towards finding an optimal action sequence.
