@@ -857,58 +857,6 @@ class OnlineSearchProblem(Problem):
         return False
 
 
-class LRTAStarAgent:
-    """ [Figure 4.24]
-    Abstract class for LRTA*-Agent. A problem needs to be
-    provided which is an instance of a subclass of Problem Class.
-
-    Takes a OnlineSearchProblem [Figure 4.23] as a problem.
-    """
-
-    def __init__(self, problem):
-        self.problem = problem
-        self.H = {}
-        self.s = None
-        self.a = None
-
-    def __call__(self, s1):  # as of now s1 is a state rather than a percept
-        if self.problem.goal_test(s1):
-            self.a = None
-            return self.a
-        else:
-            if s1 not in self.H:
-                self.H[s1] = self.problem.h(s1)
-            if self.s is not None:
-                # minimum cost for action b in problem.actions(s)
-                self.H[self.s] = min(self.LRTA_cost(self.s, b, self.problem.output(self.s, b),
-                                                    self.H) for b in self.problem.actions(self.s))
-
-            # an action b in problem.actions(s1) that minimizes costs
-            self.a = min(self.problem.actions(s1),
-                         key=lambda b: self.LRTA_cost(s1, b, self.problem.output(s1, b), self.H))
-
-            self.s = s1
-            return self.a
-
-    def LRTA_cost(self, s, a, s1, H):
-        """Returns cost to move from state 's' to state 's1' plus
-        estimated cost to get to goal from s1."""
-        print(s, a, s1)
-        if s1 is None:
-            return self.problem.h(s)
-        else:
-            # sometimes we need to get H[s1] which we haven't yet added to H
-            # to replace this try, except: we can initialize H with values from problem.h
-            try:
-                return self.problem.c(s, a, s1) + self.H[s1]
-            except:
-                return self.problem.c(s, a, s1) + self.problem.h(s1)
-
-
-# ______________________________________________________________________________
-# Genetic Algorithm
-
-
 def genetic_search(problem, ngen=1000, pmut=0.1, n=20):
     """Call genetic_algorithm on the appropriate parts of a problem.
     This requires the problem to have states that can mate and mutate,
@@ -1228,7 +1176,7 @@ class GraphProblemStochastic(GraphProblem):
     def result(self, state, action):
         return self.graph.get(state, action)
 
-    def path_cost(self):
+    def path_cost(self, cost_so_far, a, action, b):
         raise NotImplementedError
 
 
