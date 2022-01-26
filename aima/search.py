@@ -1030,16 +1030,16 @@ class Graph:
             for (b, dist) in self.graph_dict[a].items():
                 self.connect1(b, a, dist)
 
-    def connect(self, A, B, distance=1):
+    def connect(self, a, b, distance=1):
         """Add a link from A and B of given distance, and also add the inverse
         link if the graph is undirected."""
-        self.connect1(A, B, distance)
+        self.connect1(a, b, distance)
         if not self.directed:
-            self.connect1(B, A, distance)
+            self.connect1(b, a, distance)
 
-    def connect1(self, A, B, distance):
+    def connect1(self, a, b, distance):
         """Add a link from A to B of given distance, in one direction only."""
-        self.graph_dict.setdefault(A, {})[B] = distance
+        self.graph_dict.setdefault(a, {})[b] = distance
 
     def get(self, a, b=None):
         """Return a link distance or a dict of {node: distance} entries.

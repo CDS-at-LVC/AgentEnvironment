@@ -287,8 +287,7 @@ class XYEnvironment(Environment):
                 agent.holding.append(things[0])
                 print("Grabbing ", things[0].__class__.__name__)
                 self.delete_thing(things[0])
-        elif action == 'Release':
-            if agent.holding:
+        elif action == 'Release' and agent.holding:
                 dropped = agent.holding.pop()
                 print("Dropping ", dropped.__class__.__name__)
                 self.add_thing(dropped, location=agent.location)
@@ -390,7 +389,7 @@ class Wall(Obstacle):
 
 
 class GraphicEnvironment(XYEnvironment):
-    def __init__(self, width=10, height=10, boundary=True, color={}, display=False):
+    def __init__(self, width=10, height=10, boundary=True, color=None, display=False):
         """Define all the usual XYEnvironment characteristics,
         but initialise a BlockGrid for GUI too."""
         super().__init__(width, height)
@@ -401,7 +400,7 @@ class GraphicEnvironment(XYEnvironment):
         else:
             self.visible = False
         self.bounded = boundary
-        self.colors = color
+        self.colors = {} if color is None else color
 
     def get_world(self):
         """Returns all the items in the world in a format
@@ -415,23 +414,6 @@ class GraphicEnvironment(XYEnvironment):
                 row.append(self.list_things_at((x, y)))
             result.append(row)
         return result
-
-    """
-    def run(self, steps=1000, delay=1):
-        "" "Run the Environment for given number of time steps,
-        but update the GUI too." ""
-        for step in range(steps):
-            sleep(delay)
-            if self.visible:
-                self.reveal()
-            if self.is_done():
-                if self.visible:
-                    self.reveal()
-                return
-            self.step()
-        if self.visible:
-            self.reveal()
-    """
 
     def run(self, steps=1000, delay=1):
         """Run the Environment for given number of time steps,
