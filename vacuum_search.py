@@ -1,7 +1,8 @@
-
 from aima.environments import Environment
 from aima.agents import Agent
-from aima.search import Problem, SimpleProblemSolvingAgentProgram, breadth_first_graph_search, breadth_first_tree_search, depth_first_graph_search, depth_first_tree_search
+from aima.search import Problem, SimpleProblemSolvingAgentProgram
+from aima.search import breadth_first_graph_search, breadth_first_tree_search
+from aima.search import depth_first_graph_search, depth_first_tree_search
 from aima.thing import Thing
 
 
@@ -71,8 +72,7 @@ class ThreeSquareEnv(Environment):
         if action == 'S':
             items = self.list_things_at(agent.location, tclass=Dirt)
             if items:
-                print('{} cleaned {} at location: {}'
-                          .format(str(agent)[1:-1], str(items[0])[1:-1], agent.location))
+                print(f'{str(agent)} cleaned {str(items[0])} at location: {agent.location}')
                 # remove the dirt
                 self.delete_thing(items[0]) 
         elif action == 'L' and agent.location > 0:

@@ -5,7 +5,7 @@ class Thing:
     .__name__  slot (used for output only)."""
 
     def __repr__(self):
-        return '<{}>'.format(getattr(self, '__name__', self.__class__.__name__))
+        return self.__class__.__name__
 
     def is_alive(self):
         """Things that are 'alive' should return true."""
