@@ -339,12 +339,12 @@ def bidirectional_search(problem):
     e = 0
     if isinstance(problem, GraphProblem):
         e = problem.find_min_edge()
-    gF, gB = {Node(problem.initial): 0}, {Node(problem.goal): 0}
-    openF, openB = [Node(problem.initial)], [Node(problem.goal)]
-    closedF, closedB = [], []
+    g_f, g_b = {Node(problem.initial): 0}, {Node(problem.goal): 0}
+    open_f, open_b = [Node(problem.initial)], [Node(problem.goal)]
+    closed_f, closed_b = [], []
     U = np.inf
 
-    def extend(U, open_dir, open_other, g_dir, g_other, closed_dir):
+    def extend(u, open_dir, open_other, g_dir, g_other, closed_dir):
         """Extend search in given direction"""
         n = find_key(C, open_dir, g_dir)
 
@@ -362,9 +362,9 @@ def bidirectional_search(problem):
             open_dir.append(c)
 
             if c in open_other:
-                U = min(U, g_dir[c] + g_other[c])
+                u = min(u, g_dir[c] + g_other[c])
 
-        return U, open_dir, closed_dir, g_dir
+        return u, open_dir, closed_dir, g_dir
 
     def find_min(open_dir, g):
         """Finds minimum priority, g and f values in open_dir"""
@@ -392,9 +392,9 @@ def bidirectional_search(problem):
 
         return node
 
-    while openF and openB:
-        pr_min_f, f_min_f, g_min_f = find_min(openF, gF)
-        pr_min_b, f_min_b, g_min_b = find_min(openB, gB)
+    while open_f and open_b:
+        pr_min_f, f_min_f, g_min_f = find_min(open_f, g_f)
+        pr_min_b, f_min_b, g_min_b = find_min(open_b, g_b)
         C = min(pr_min_f, pr_min_b)
 
         if U <= max(C, f_min_f, f_min_b, g_min_f + g_min_b + e):
@@ -402,10 +402,10 @@ def bidirectional_search(problem):
 
         if C == pr_min_f:
             # Extend forward
-            U, openF, closedF, gF = extend(U, openF, openB, gF, gB, closedF)
+            U, open_f, closed_f, g_f = extend(U, open_f, open_b, g_f, g_b, closed_f)
         else:
             # Extend backward
-            U, openB, closedB, gB = extend(U, openB, openF, gB, gF, closedB)
+            U, open_b, closed_b, g_b = extend(U, open_b, open_f, g_b, g_f, closed_b)
 
     return np.inf
 
@@ -553,7 +553,7 @@ class PlanRoute(Problem):
             elif state.get_orientation() == 'RIGHT':
                 proposed_loc = [x + 1, y]
             else:
-                raise Exception('InvalidOrientation')
+                raise ValueError('InvalidOrientation')
 
         # Rotate counter-clockwise
         elif action == 'TurnLeft':
@@ -566,7 +566,7 @@ class PlanRoute(Problem):
             elif state.get_orientation() == 'RIGHT':
                 state.set_orientation('UP')
             else:
-                raise Exception('InvalidOrientation')
+                raise ValueError('InvalidOrientation')
 
         # Rotate clockwise
         elif action == 'TurnRight':
@@ -579,7 +579,7 @@ class PlanRoute(Problem):
             elif state.get_orientation() == 'RIGHT':
                 state.set_orientation('DOWN')
             else:
-                raise Exception('InvalidOrientation')
+                raise ValueError('InvalidOrientation')
 
         if proposed_loc in self.allowed:
             state.set_location(proposed_loc[0], [proposed_loc[1]])

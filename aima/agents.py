@@ -133,7 +133,7 @@ def rule_match(state, rules):
 # ______________________________________________________________________________
 
 
-def compare_agents(EnvFactory, AgentFactories, n=10, steps=1000):
+def compare_agents(env_factory, agent_factories, n=10, steps=1000):
     """See how well each of several agents do in n instances of an environment.
     Pass in a factory (constructor) for environments, and several for agents.
     Create n instances of the environment, and run each agent in copies of
@@ -146,12 +146,12 @@ def compare_agents(EnvFactory, AgentFactories, n=10, steps=1000):
     >>> performance_ReflexVacuumAgent <= performance_ModelBasedVacuumAgent
     True
     """
-    envs = [EnvFactory() for i in range(n)]
+    envs = [env_factory() for _ in range(n)]
     return [(A, test_agent(A, steps, copy.deepcopy(envs)))
-            for A in AgentFactories]
+            for A in agent_factories]
 
 
-def test_agent(AgentFactory, steps, envs):
+def test_agent(agent_factory, steps, envs):
     """Return the mean score of running an agent in each of the envs, for steps
     >>> def constant_prog(percept):
     ...     return percept
@@ -163,7 +163,7 @@ def test_agent(AgentFactory, steps, envs):
     """
 
     def score(env):
-        agent = AgentFactory()
+        agent = agent_factory()
         env.add_thing(agent)
         env.run(steps)
         return agent.performance
@@ -185,7 +185,7 @@ class Direction:
     D = "down"
 
     def __init__(self, direction):
-        self.direction = direction
+        self.dir = direction
 
     def __add__(self, heading):
         """
@@ -204,22 +204,22 @@ class Direction:
         >>> l2.direction == Direction.R
         True
         """
-        if self.direction == self.R:
+        if self.dir == self.R:
             return {
                 self.R: Direction(self.D),
                 self.L: Direction(self.U),
             }.get(heading, None)
-        elif self.direction == self.L:
+        elif self.dir == self.L:
             return {
                 self.R: Direction(self.U),
                 self.L: Direction(self.D),
             }.get(heading, None)
-        elif self.direction == self.U:
+        elif self.dir == self.U:
             return {
                 self.R: Direction(self.R),
                 self.L: Direction(self.L),
             }.get(heading, None)
-        elif self.direction == self.D:
+        elif self.dir == self.D:
             return {
                 self.R: Direction(self.L),
                 self.L: Direction(self.R),
@@ -239,11 +239,11 @@ class Direction:
         # get the iterable class to return
         iclass = from_location.__class__
         x, y = from_location
-        if self.direction == self.R:
+        if self.dir == self.R:
             return iclass((x + 1, y))
-        elif self.direction == self.L:
+        elif self.dir == self.L:
             return iclass((x - 1, y))
-        elif self.direction == self.U:
+        elif self.dir == self.U:
             return iclass((x, y - 1))
-        elif self.direction == self.D:
+        elif self.dir == self.D:
             return iclass((x, y + 1))
