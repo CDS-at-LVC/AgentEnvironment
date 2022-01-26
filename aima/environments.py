@@ -69,9 +69,10 @@ class Environment:
 
     def run(self, steps=1000):
         """Run the Environment for given number of time steps."""
-        for _ in range(steps):
+        for i in range(steps):
             if self.is_done():
                 return
+            print(f'step {i}')
             self.step()
 
     def list_things_at(self, location, tclass=Thing):
