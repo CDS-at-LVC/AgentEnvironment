@@ -57,6 +57,7 @@ class VacuumProblemSolverProgram(SimpleProblemSolvingAgentProgram):
         #return depth_first_graph_search(problem=problem).solution()
         #return depth_limited_search(problem=problem, limit=14).solution()
         #return iterative_deepening_search(problem=problem).solution()
+
 class Dirt(Thing):
     pass
 
