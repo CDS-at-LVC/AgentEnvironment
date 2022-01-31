@@ -1,7 +1,7 @@
 # AgentEnvironment
 An example based on the Agent/Environment python code from AIMA. I've restructured the book code and added a matplotlib-based visualiazation so that we can work with it outside of Jupyter.
 
-The example code (room.py, simple_ex.py) solves all of our first homework coding exercise except for the "stop moving when the floor is clean" requirement. That requirement is intended to provoke you -- it requires that the vacuum has some understanding of the entire environment outside of its percepts. You can solve it by adding, e.g., a parameter to the agent that tells it the initial number of dirty squares. Not realistic.
+So, this repo is growing to become home for a variety of rewritten/reorganized bits of code from the book's (_Artificial Intelligence: A Modern Approach_, 4<sup>th</sup> edition) python repo. 
 
 Remember, the steps to getting this running are
 * clone the repo
@@ -11,7 +11,17 @@ Remember, the steps to getting this running are
 * install requirements **pip install -r requirements.txt** (you can trim requirements.txt first if you want. Lots of stuff there you don't need)
 * Now the program should run.
 
-# Examples
+# Changes to book's repo
+
+My approach has been to move python source over from the book's repo as we need it. I'm placing it in the [aima](aima) module. 
+
+The authors of the aima python codebase combined a lot of stuff together in single python files; for instance, the original **agents.py** contained the agent class, the environment class, several variant subclasses of those, and several examples. 
+
+I've decided to split these things up. Fundamental base classes (e.g., **Agent**, **Problem**) have gotten their own files, examples have been split off into separate files. I think this is making for a collection of files that is a bit easier to navigate, though as things progress we might want to reorganize into submodules.
+
+The base folder in the repo contains examples that I created for our class conversation, or that are related to our homework.
+
+# Our Examples
 The examples that are currently present are:
 * [simple_ex](simple_ex.py), a simple agent in a simple environment with a simple program to run.
 * [room](room.py), an environment that shows off the matplotlib-based visualization of gridlike environments that I added.
