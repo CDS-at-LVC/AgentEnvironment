@@ -1,17 +1,17 @@
+from aima.thing import Thing
 from aima.environments import Environment
 from aima.agents import Agent
-from aima.search import Problem, SimpleProblemSolvingAgentProgram, depth_limited_search, iterative_deepening_search
-from aima.search import breadth_first_graph_search, breadth_first_tree_search
-from aima.search import depth_first_graph_search, depth_first_tree_search
-from aima.thing import Thing
+from aima.search import (Problem, SimpleProblemSolvingAgentProgram, astar_search, 
+                         depth_limited_search, iterative_deepening_search, 
+                         breadth_first_graph_search, breadth_first_tree_search,
+                         depth_first_graph_search, depth_first_tree_search, uniform_cost_search)
 
 
 class VacuumProblem(Problem):
     """
-    We record a state as a list of 4 characters. The first three are 'D' 
-    for dirty and 'C'  for clean, indicating whether the left, middle, or
-    right gridpoints are dirty or clean. The fourth entry is 0, 1, 2 
-    indicating the position of the vacuum. 
+    We record a state as a list of n characters. The first n-1 are 'D' 
+    for dirty and 'C'  for clean. The last entry indicates the position 
+    of the vacuum. 
     """
     def __init__(self, initial, goal, size):
         super().__init__(initial, goal)
@@ -21,7 +21,7 @@ class VacuumProblem(Problem):
         """
         The list of possible actions is always the same
         """
-        return ['R', 'L', 'S']
+        return ['R', 'S', 'L']
 
     def result(self, state, action):
         """
@@ -52,11 +52,16 @@ class VacuumProblemSolverProgram(SimpleProblemSolvingAgentProgram):
         return VacuumProblem(initial=state, goal=goal, size=self.size)
 
     def search(self, problem):
-        return breadth_first_tree_search(problem=problem).solution()
+        def h(n):
+            return 1302*sum([1 if x == 'D' else 0 for x in n.state]) - 1
+
+        #return breadth_first_graph_search(problem=problem).solution()
+        #return breadth_first_tree_search(problem=problem).solution()
         #return depth_first_tree_search(problem=problem).solution()
         #return depth_first_graph_search(problem=problem).solution()
-        #return depth_limited_search(problem=problem, limit=14).solution()
-        #return iterative_deepening_search(problem=problem).solution()
+        #return depth_limited_search(problem=problem, limit=20).solution()
+        #return uniform_cost_search(problem=problem).solution()
+        #return astar_search(problem=problem, h=h).solution()
 
 class Dirt(Thing):
     pass
@@ -89,15 +94,16 @@ class LinearVacuumEnv(Environment):
         
 
 if __name__=='__main__':
-    env = LinearVacuumEnv(size=7)
+    env = LinearVacuumEnv(size=10)
     env.add_thing(Dirt(), 0)
     env.add_thing(Dirt(), 2)
     env.add_thing(Dirt(), 3)
     env.add_thing(Dirt(), 5)
     env.add_thing(Dirt(), 6)
+    env.add_thing(Dirt(), 9)
     
-    vacuum = Agent(VacuumProblemSolverProgram(size=7, initial=('D','C','D','D','C','D','D', 3)))
-    env.add_thing(vacuum, 3)
+    vacuum = Agent(VacuumProblemSolverProgram(size=10, initial=('D','C','D','D','C','D','D','C','C','D', 5)))
+    env.add_thing(vacuum, 5)
 
     env.run(50)
 
