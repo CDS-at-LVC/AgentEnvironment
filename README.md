@@ -14,5 +14,6 @@ Remember, the steps to getting this running are
 # Examples
 The examples that are currently present are:
 * [simple_ex](simple_ex.py), a simple agent in a simple environment with a simple program to run.
+* [room](room.py), an environment that shows off the matplotlib-based visualization of gridlike environments that I added.
 * [vacuum search](vacuum_search.py), which creates a [Problem](aima/problem.py) representing a linear vacuum environment so that we can apply various uninformed search algorithms towards finding an optimal action sequence.
 * [eight_queens](eight_queens.py), an example application of hill-climbing and simulated annealing to the classic 8-queens problem.
