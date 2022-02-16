@@ -1,4 +1,3 @@
-from black import re
 from aima.thing import Thing
 from aima.environments import GridEnvironmentMPL
 
