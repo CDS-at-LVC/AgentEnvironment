@@ -35,7 +35,7 @@ import itertools
 import random
 from collections import defaultdict
 
-from utils4e import remove_all, unique, first, probability, isnumber, issequence, Expr, expr, subexpressions
+from aima.utils4e import remove_all, unique, first, probability, isnumber, issequence, Expr, expr, subexpressions
 
 
 # ______________________________________________________________________________
